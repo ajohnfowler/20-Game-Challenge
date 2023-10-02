@@ -1,0 +1,136 @@
+[gd_scene load_steps=11 format=3 uid="uid://dwp1blmqrrgx0"]
+
+[ext_resource type="PackedScene" uid="uid://6r6t1fhgm7qv" path="res://paddles/paddle.tscn" id="1_0shvy"]
+[ext_resource type="Script" path="res://game.gd" id="1_7stq8"]
+[ext_resource type="Script" path="res://UI.gd" id="2_3u4y2"]
+[ext_resource type="PackedScene" uid="uid://cb4bdr0awpacg" path="res://ball/ball.tscn" id="2_gc6s7"]
+[ext_resource type="Texture2D" uid="uid://jm8kfv1uc6yb" path="res://assets/line.png" id="2_roanu"]
+[ext_resource type="Script" path="res://paddles/PaddleManager.gd" id="6_sciri"]
+[ext_resource type="Texture2D" uid="uid://sw0dsvjpsmda" path="res://assets/background.png" id="6_v4lbl"]
+[ext_resource type="Script" path="res://ball/BallManager.gd" id="8_0h3qy"]
+
+[sub_resource type="Environment" id="Environment_pm4nr"]
+glow_enabled = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ocjxv"]
+size = Vector2(960, 16)
+
+[node name="Game" type="Node"]
+script = ExtResource("1_7stq8")
+
+[node name="Background" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_v4lbl")
+stretch_mode = 1
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_pm4nr")
+
+[node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource("2_3u4y2")
+
+[node name="P0ScoreLabel" type="Label" parent="UI"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -48.0
+offset_right = -16.0
+offset_bottom = 32.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 32
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="P1ScoreLabel" type="Label" parent="UI"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 16.0
+offset_right = 48.0
+offset_bottom = 32.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 32
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="UI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Countdown" type="Label" parent="UI/PanelContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 64
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Line2D" type="Line2D" parent="."]
+modulate = Color(1, 1, 1, 0.588235)
+texture_filter = 1
+texture_repeat = 2
+points = PackedVector2Array(480, 0, 480, 640)
+width = 8.0
+texture = ExtResource("2_roanu")
+texture_mode = 1
+
+[node name="Walls" type="StaticBody2D" parent="."]
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls"]
+position = Vector2(480, -8)
+shape = SubResource("RectangleShape2D_ocjxv")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Walls"]
+position = Vector2(480, 648)
+shape = SubResource("RectangleShape2D_ocjxv")
+
+[node name="PaddleManager" type="Node" parent="."]
+script = ExtResource("6_sciri")
+paddle = ExtResource("1_0shvy")
+
+[node name="Player0Paddle" parent="PaddleManager" groups=["P1"] instance=ExtResource("1_0shvy")]
+position = Vector2(40, 320)
+
+[node name="Player1Paddle" parent="PaddleManager" groups=["P2"] instance=ExtResource("1_0shvy")]
+position = Vector2(920, 320)
+rotation = 3.14159
+number = 1
+
+[node name="Spawn0" type="Marker2D" parent="PaddleManager"]
+position = Vector2(40, 320)
+
+[node name="Spawn1" type="Marker2D" parent="PaddleManager"]
+position = Vector2(920, 320)
+
+[node name="BallManager" type="Node" parent="."]
+script = ExtResource("8_0h3qy")
+ball = ExtResource("2_gc6s7")
+
+[node name="Spawn0" type="Marker2D" parent="BallManager"]
+position = Vector2(180, 320)
+
+[node name="Spawn1" type="Marker2D" parent="BallManager"]
+position = Vector2(780, 320)

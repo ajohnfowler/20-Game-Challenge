@@ -1,0 +1,97 @@
+[gd_scene load_steps=9 format=3 uid="uid://dwp1blmqrrgx0"]
+
+[ext_resource type="PackedScene" uid="uid://6r6t1fhgm7qv" path="res://paddle.tscn" id="1_0shvy"]
+[ext_resource type="Script" path="res://game.gd" id="1_7stq8"]
+[ext_resource type="PackedScene" uid="uid://cb4bdr0awpacg" path="res://ball.tscn" id="2_3hkbm"]
+[ext_resource type="Script" path="res://UI.gd" id="2_3u4y2"]
+[ext_resource type="Texture2D" uid="uid://jm8kfv1uc6yb" path="res://assets/line.png" id="2_roanu"]
+
+[sub_resource type="Environment" id="Environment_pm4nr"]
+glow_enabled = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ocjxv"]
+size = Vector2(480, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ulkwo"]
+size = Vector2(16, 320)
+
+[node name="Game" type="Node"]
+script = ExtResource("1_7stq8")
+ball = ExtResource("2_3hkbm")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_pm4nr")
+
+[node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource("2_3u4y2")
+
+[node name="P1ScoreLabel" type="Label" parent="UI"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -48.0
+offset_right = -16.0
+offset_bottom = 32.0
+grow_horizontal = 2
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="P2ScoreLabel" type="Label" parent="UI"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 16.0
+offset_right = 48.0
+offset_bottom = 32.0
+grow_horizontal = 2
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Line2D" type="Line2D" parent="."]
+modulate = Color(1, 1, 1, 0.588235)
+texture_filter = 1
+texture_repeat = 2
+points = PackedVector2Array(240, 0, 240, 320)
+width = 8.0
+texture = ExtResource("2_roanu")
+texture_mode = 1
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(240, -8)
+shape = SubResource("RectangleShape2D_ocjxv")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(240, 328)
+shape = SubResource("RectangleShape2D_ocjxv")
+
+[node name="PlayerOnePaddle" parent="." groups=["P1"] instance=ExtResource("1_0shvy")]
+position = Vector2(16, 160)
+
+[node name="PlayerTwoPaddle" parent="." groups=["P2"] instance=ExtResource("1_0shvy")]
+position = Vector2(464, 160)
+rotation = 3.14159
+
+[node name="Player1Outbound" type="Area2D" parent="."]
+position = Vector2(488, 160)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player1Outbound"]
+shape = SubResource("RectangleShape2D_ulkwo")
+
+[node name="Player2Outbound" type="Area2D" parent="."]
+position = Vector2(-8, 160)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player2Outbound"]
+shape = SubResource("RectangleShape2D_ulkwo")
+
+[node name="Spawn1" type="Marker2D" parent="."]
+position = Vector2(112, 160)
+
+[node name="Spawn2" type="Marker2D" parent="."]
+position = Vector2(368, 160)
+
+[connection signal="body_entered" from="Player1Outbound" to="." method="_on_player_1_outbound_body_entered"]
+[connection signal="body_entered" from="Player2Outbound" to="." method="_on_player_2_outbound_body_entered"]
