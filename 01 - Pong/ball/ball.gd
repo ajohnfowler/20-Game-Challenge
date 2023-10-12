@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-signal out(side: String)
+signal out()
 
 var is_moving = false
 
@@ -22,5 +22,5 @@ func _physics_process(delta):
 	velocity = velocity.bounce(collision.get_normal()) * 1.0
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
-	out.emit("left" if velocity.x > 0 else "right")
+	out.emit()
 	queue_free()

@@ -16,6 +16,6 @@ func _on_round_start():
 	countdownPanel.visible = false
 
 func _process(delta):
-	p0ScoreLabel.text = str(Global.scores[1])
-	p1ScoreLabel.text = str(Global.scores[0])
+	p0ScoreLabel.text = str(Global.scores[0])
+	p1ScoreLabel.text = str(Global.scores[1])
 	countdownLabel.text = str(ceil(Global.timer.time_left))

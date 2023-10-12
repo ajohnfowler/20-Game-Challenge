@@ -1,15 +1,83 @@
-[gd_scene format=3 uid="uid://dhbjq2xuwrpxd"]
+[gd_scene load_steps=5 format=3 uid="uid://dhbjq2xuwrpxd"]
 
-[node name="Menu" type="Control"]
-layout_mode = 3
+[ext_resource type="Texture2D" uid="uid://sw0dsvjpsmda" path="res://assets/background.png" id="1_bpw5l"]
+[ext_resource type="Texture2D" uid="uid://jm8kfv1uc6yb" path="res://assets/line.png" id="2_voeoq"]
+[ext_resource type="PackedScene" uid="uid://6r6t1fhgm7qv" path="res://paddles/paddle.tscn" id="3_yd4ly"]
+
+[sub_resource type="Environment" id="Environment_cfon6"]
+background_mode = 3
+glow_enabled = true
+glow_normalized = true
+glow_intensity = 2.0
+glow_strength = 2.0
+glow_bloom = 0.05
+glow_hdr_threshold = 0.2
+
+[node name="Menu" type="Node"]
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="P0ScoreLabel" type="Label" parent="UI"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -48.0
+offset_right = -16.0
+offset_bottom = 32.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 32
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="P1ScoreLabel" type="Label" parent="UI"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 16.0
+offset_right = 48.0
+offset_bottom = 32.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 32
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Background" type="TextureRect" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("1_bpw5l")
+stretch_mode = 1
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.5, 0.5, 0.5, 1)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_cfon6")
+
+[node name="Line2D" type="Line2D" parent="."]
+modulate = Color(1, 1, 1, 0.588235)
+texture_filter = 1
+texture_repeat = 2
+points = PackedVector2Array(480, 0, 480, 640)
+width = 8.0
+texture = ExtResource("2_voeoq")
+texture_mode = 1
+
+[node name="Spawn0" type="Marker2D" parent="."]
+position = Vector2(40, 320)
+
+[node name="Paddle" parent="Spawn0" instance=ExtResource("3_yd4ly")]
+
+[node name="Spawn1" type="Marker2D" parent="."]
+position = Vector2(920, 320)
+
+[node name="Paddle" parent="Spawn1" instance=ExtResource("3_yd4ly")]
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
-layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -39,36 +107,41 @@ horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+alignment = 1
 
 [node name="PlayerOne" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 alignment = 1
-item_count = 4
+item_count = 5
 selected = 0
-popup/item_0/text = "P1"
+popup/item_0/text = "Player 1"
 popup/item_0/id = 0
-popup/item_0/separator = true
-popup/item_1/text = "CPU Easy"
-popup/item_1/id = 1
-popup/item_2/text = "CPU Medium"
-popup/item_2/id = 2
-popup/item_3/text = "CPU Hard"
-popup/item_3/id = 3
+popup/item_1/text = "CPU"
+popup/item_1/id = 4
+popup/item_1/separator = true
+popup/item_2/text = "Easy"
+popup/item_2/id = 1
+popup/item_3/text = "Medium"
+popup/item_3/id = 2
+popup/item_4/text = "Hard"
+popup/item_4/id = 3
 
 [node name="PlayerTwo" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 alignment = 1
-item_count = 4
+item_count = 5
 selected = 0
-popup/item_0/text = "P2"
+popup/item_0/text = "Player 2"
 popup/item_0/id = 0
-popup/item_0/separator = true
-popup/item_1/text = "CPU Easy"
-popup/item_1/id = 1
-popup/item_2/text = "CPU Medium"
-popup/item_2/id = 2
-popup/item_3/text = "CPU Hard"
-popup/item_3/id = 3
+popup/item_1/text = "CPU"
+popup/item_1/id = 4
+popup/item_1/separator = true
+popup/item_2/text = "Easy"
+popup/item_2/id = 1
+popup/item_3/text = "Medium"
+popup/item_3/id = 2
+popup/item_4/text = "Hard"
+popup/item_4/id = 3
 
 [node name="Button" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2

@@ -3,7 +3,7 @@ extends Node
 @onready var spawns = [$Spawn0, $Spawn1]
 
 @export var ball: PackedScene
-var ball_node
+var balls = []
 
 @onready var ball_position = spawns[0]
 var directions = [1,-1]
@@ -18,16 +18,17 @@ func _on_round_setup():
 	add_ball(spawn_position, spawn_velocity, false)
 
 func add_ball(position, velocity, moving):
-	ball_node = ball.instantiate()
-	ball_node.setup(position, velocity, moving)
-	ball_node.out.connect(_on_ball_out)
-	add_child(ball_node)
+	var new_ball = ball.instantiate()
+	new_ball.setup(position, velocity, moving)
+	new_ball.out.connect(_on_ball_out.bind(new_ball))
+	balls.append(new_ball)
+	add_child(new_ball)
 
-func _on_ball_out(side: String):
-	match side:
-		"left":
-			Global.scores[1] += 1
-		"right":
-			Global.scores[0] += 1
-	if get_tree().get_nodes_in_group("ball").size() == 0:
+func _on_ball_out(node: CharacterBody2D):
+	balls.erase(node)
+	if node.velocity.x > 0:
+		Global.player_scored(0)
+	else:
+		Global.player_scored(1)
+	if balls.size() == 0:
 		Global.setup_round()

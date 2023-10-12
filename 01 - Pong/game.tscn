@@ -10,7 +10,13 @@
 [ext_resource type="Script" path="res://ball/BallManager.gd" id="8_0h3qy"]
 
 [sub_resource type="Environment" id="Environment_pm4nr"]
+background_mode = 3
 glow_enabled = true
+glow_normalized = true
+glow_intensity = 2.0
+glow_strength = 2.0
+glow_bloom = 0.05
+glow_hdr_threshold = 0.2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ocjxv"]
 size = Vector2(960, 16)
@@ -26,6 +32,9 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("6_v4lbl")
 stretch_mode = 1
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.5, 0.5, 0.5, 1)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_pm4nr")
@@ -110,14 +119,6 @@ shape = SubResource("RectangleShape2D_ocjxv")
 [node name="PaddleManager" type="Node" parent="."]
 script = ExtResource("6_sciri")
 paddle = ExtResource("1_0shvy")
-
-[node name="Player0Paddle" parent="PaddleManager" groups=["P1"] instance=ExtResource("1_0shvy")]
-position = Vector2(40, 320)
-
-[node name="Player1Paddle" parent="PaddleManager" groups=["P2"] instance=ExtResource("1_0shvy")]
-position = Vector2(920, 320)
-rotation = 3.14159
-number = 1
 
 [node name="Spawn0" type="Marker2D" parent="PaddleManager"]
 position = Vector2(40, 320)

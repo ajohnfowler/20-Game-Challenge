@@ -1,15 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://6r6t1fhgm7qv"]
+[gd_scene load_steps=6 format=3 uid="uid://6r6t1fhgm7qv"]
 
 [ext_resource type="Script" path="res://paddles/paddle.gd" id="1_iuehp"]
 [ext_resource type="Texture2D" uid="uid://cmiok4fo4duun" path="res://assets/paddle.png" id="2_4qicr"]
+[ext_resource type="Texture2D" uid="uid://dfp3mgesrkd82" path="res://assets/Light.webp" id="3_onxmv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_okliw"]
 size = Vector2(8, 128)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_7l4is"]
+polygon = PackedVector2Array(-7, -60, -6, -62, -4, -63, 4, -63, 6, -62, 7, -60, 7, 60, 6, 62, 4, 63, -4, 63, -6, 62, -7, 60)
 
 [node name="Paddle" type="CharacterBody2D"]
 texture_filter = 1
 collision_layer = 2
 collision_mask = 5
+motion_mode = 1
 script = ExtResource("1_iuehp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -17,3 +22,12 @@ shape = SubResource("RectangleShape2D_okliw")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_4qicr")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource("OccluderPolygon2D_7l4is")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+energy = 0.25
+shadow_enabled = true
+shadow_item_cull_mask = 2
+texture = ExtResource("3_onxmv")
