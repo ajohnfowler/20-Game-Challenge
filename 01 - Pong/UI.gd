@@ -2,8 +2,8 @@ extends CanvasLayer
 
 @onready var p0ScoreLabel: Label = $P0ScoreLabel
 @onready var p1ScoreLabel: Label = $P1ScoreLabel
-@onready var countdownPanel: PanelContainer = $PanelContainer
-@onready var countdownLabel: Label = $PanelContainer/MarginContainer/Countdown
+@onready var countdownPanel: PanelContainer = $Countdown
+@onready var countdownLabel: Label = $Countdown/MarginContainer/Countdown
 
 func _ready():
 	Global.round_setup.connect(_on_round_setup)

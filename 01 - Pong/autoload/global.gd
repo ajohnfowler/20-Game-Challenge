@@ -3,16 +3,14 @@ extends Node
 signal round_setup
 signal round_start
 
-class Game:
-	var scores: Array(2)
-	var starting_player: int
-
-var current_game
-
+var scores = [0,0]
+var starting_player = 0
+var players = [0,0]
 var timer: SceneTreeTimer
 
 func new_game():
-	current_game = game.clone()
+	scores = [0,0]
+	starting_player = 0
 
 func setup_round():
 	round_setup.emit()

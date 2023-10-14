@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dhbjq2xuwrpxd"]
+[gd_scene load_steps=6 format=3 uid="uid://dhbjq2xuwrpxd"]
 
+[ext_resource type="Script" path="res://menu.gd" id="1_0ebht"]
 [ext_resource type="Texture2D" uid="uid://sw0dsvjpsmda" path="res://assets/background.png" id="1_bpw5l"]
 [ext_resource type="Texture2D" uid="uid://jm8kfv1uc6yb" path="res://assets/line.png" id="2_voeoq"]
 [ext_resource type="PackedScene" uid="uid://6r6t1fhgm7qv" path="res://paddles/paddle.tscn" id="3_yd4ly"]
@@ -14,6 +15,7 @@ glow_bloom = 0.05
 glow_hdr_threshold = 0.2
 
 [node name="Menu" type="Node"]
+script = ExtResource("1_0ebht")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -42,6 +44,65 @@ theme_override_font_sizes/font_size = 32
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="UI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -155.0
+offset_top = -66.0
+offset_right = 155.0
+offset_bottom = 66.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"HeaderLarge"
+text = "Pong"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="PlayerOne" type="OptionButton" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+item_count = 2
+selected = 0
+popup/item_0/text = "Player 1"
+popup/item_0/id = 0
+popup/item_1/text = "CPU"
+popup/item_1/id = 4
+
+[node name="PlayerTwo" type="OptionButton" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+item_count = 2
+selected = 0
+popup/item_0/text = "Player 2"
+popup/item_0/id = 0
+popup/item_1/text = "CPU"
+popup/item_1/id = 4
+
+[node name="Play" type="Button" parent="UI/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Play"
 
 [node name="Background" type="TextureRect" parent="."]
 anchors_preset = 15
@@ -77,72 +138,6 @@ position = Vector2(920, 320)
 
 [node name="Paddle" parent="Spawn1" instance=ExtResource("3_yd4ly")]
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -155.0
-offset_top = -58.0
-offset_right = 155.0
-offset_bottom = 58.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Pong"
-horizontal_alignment = 1
-
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="PlayerOne" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-alignment = 1
-item_count = 5
-selected = 0
-popup/item_0/text = "Player 1"
-popup/item_0/id = 0
-popup/item_1/text = "CPU"
-popup/item_1/id = 4
-popup/item_1/separator = true
-popup/item_2/text = "Easy"
-popup/item_2/id = 1
-popup/item_3/text = "Medium"
-popup/item_3/id = 2
-popup/item_4/text = "Hard"
-popup/item_4/id = 3
-
-[node name="PlayerTwo" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-alignment = 1
-item_count = 5
-selected = 0
-popup/item_0/text = "Player 2"
-popup/item_0/id = 0
-popup/item_1/text = "CPU"
-popup/item_1/id = 4
-popup/item_1/separator = true
-popup/item_2/text = "Easy"
-popup/item_2/id = 1
-popup/item_3/text = "Medium"
-popup/item_3/id = 2
-popup/item_4/text = "Hard"
-popup/item_4/id = 3
-
-[node name="Button" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Play"
+[connection signal="item_selected" from="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/PlayerOne" to="." method="_on_player_one_item_selected"]
+[connection signal="item_selected" from="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/PlayerTwo" to="." method="_on_player_two_item_selected"]
+[connection signal="pressed" from="UI/PanelContainer/MarginContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]

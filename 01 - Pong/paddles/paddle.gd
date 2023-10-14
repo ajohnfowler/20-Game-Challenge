@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var controllable = false
+@export var controllable = true
 @export var number: int = 0
 @export var speed = 500.0
 
