@@ -40,6 +40,7 @@ color = Color(0.5, 0.5, 0.5, 1)
 environment = SubResource("Environment_pm4nr")
 
 [node name="UI" type="CanvasLayer" parent="."]
+process_mode = 3
 script = ExtResource("2_3u4y2")
 
 [node name="P0ScoreLabel" type="Label" parent="UI"]
@@ -179,6 +180,11 @@ position = Vector2(180, 320)
 [node name="Spawn1" type="Marker2D" parent="BallManager"]
 position = Vector2(780, 320)
 
-[connection signal="pressed" from="UI/Pause/MarginContainer/VBoxContainer/Restart" to="." method="_on_restart_pressed"]
-[connection signal="pressed" from="UI/Pause/MarginContainer/VBoxContainer/Menu" to="." method="_on_menu_pressed"]
-[connection signal="pressed" from="UI/Pause/MarginContainer/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="pressed" from="UI/Pause/MarginContainer/VBoxContainer/Restart" to="UI" method="_on_restart_pressed"]
+[connection signal="pressed" from="UI/Pause/MarginContainer/VBoxContainer/Menu" to="UI" method="_on_menu_pressed"]
+[connection signal="pressed" from="UI/Pause/MarginContainer/VBoxContainer/Resume" to="UI" method="_on_resume_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

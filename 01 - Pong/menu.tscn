@@ -137,6 +137,7 @@ position = Vector2(40, 320)
 position = Vector2(920, 320)
 
 [node name="Paddle" parent="Spawn1" instance=ExtResource("3_yd4ly")]
+number = 1
 
 [connection signal="item_selected" from="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/PlayerOne" to="." method="_on_player_one_item_selected"]
 [connection signal="item_selected" from="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/PlayerTwo" to="." method="_on_player_two_item_selected"]

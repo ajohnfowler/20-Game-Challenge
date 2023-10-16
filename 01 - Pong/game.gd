@@ -1,16 +1,18 @@
 extends Node
 
+@onready var timer: Timer = $Timer
+
 func _ready():
+	Global.round_setup.connect(_on_round_setup)
+	
 	Global.setup_round()
+	
+func _on_round_setup():
+	timer.start()
 
-func _on_restart_pressed():
-	Global.new_game()
-	get_tree().reload_current_scene()
-	get_tree().paused = false
+func _input(event):
+	if event.is_action_pressed("ui_cancel"):
+		get_tree().paused = !get_tree().paused
 
-func _on_menu_pressed():
-	get_tree().change_scene_to_file("res://menu.tscn")
-	get_tree().paused = false
-
-func _on_resume_pressed():
-	get_tree().paused = true
+func _on_timer_timeout():
+	Global.start_round()

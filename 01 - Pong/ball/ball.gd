@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 signal out()
 
-var is_moving = false
+@export var is_moving = false
 
 func _ready():
 	Global.round_start.connect(_on_round_start)
